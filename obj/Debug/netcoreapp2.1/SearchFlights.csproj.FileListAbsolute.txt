@@ -1,0 +1,11 @@
+F:\Users\David\Source\Repos\SearchFlights\bin\Debug\netcoreapp2.1\SearchFlights.deps.json
+F:\Users\David\Source\Repos\SearchFlights\bin\Debug\netcoreapp2.1\SearchFlights.runtimeconfig.json
+F:\Users\David\Source\Repos\SearchFlights\bin\Debug\netcoreapp2.1\SearchFlights.runtimeconfig.dev.json
+F:\Users\David\Source\Repos\SearchFlights\bin\Debug\netcoreapp2.1\SearchFlights.dll
+F:\Users\David\Source\Repos\SearchFlights\bin\Debug\netcoreapp2.1\SearchFlights.pdb
+F:\Users\David\Source\Repos\SearchFlights\obj\Debug\netcoreapp2.1\SearchFlights.csprojAssemblyReference.cache
+F:\Users\David\Source\Repos\SearchFlights\obj\Debug\netcoreapp2.1\SearchFlights.csproj.CoreCompileInputs.cache
+F:\Users\David\Source\Repos\SearchFlights\obj\Debug\netcoreapp2.1\SearchFlights.AssemblyInfoInputs.cache
+F:\Users\David\Source\Repos\SearchFlights\obj\Debug\netcoreapp2.1\SearchFlights.AssemblyInfo.cs
+F:\Users\David\Source\Repos\SearchFlights\obj\Debug\netcoreapp2.1\SearchFlights.dll
+F:\Users\David\Source\Repos\SearchFlights\obj\Debug\netcoreapp2.1\SearchFlights.pdb
