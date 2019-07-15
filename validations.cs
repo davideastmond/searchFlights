@@ -9,6 +9,7 @@ namespace SearchFlights
 {
   public static class Validations
   {
+    public static JObject airportDataObject;
     /* These are our validation functions that will return false if the user input is invalid */
     public static Tuple<bool, DateTime> validateUserDateInput(string dataInput)
     {
@@ -49,7 +50,7 @@ namespace SearchFlights
     {
       // Make sure the user's input for origin or destination string isn't empty.
       // API call to RyanAir to get a list of their destinations / origins to make sure that the user entered a valid dest/origin.
-      dataInput = dataInput.Trim();
+      dataInput = dataInput.Trim().ToUpper();
       if (dataInput == "")
       {
         return new Tuple<bool, string>(false, null);
@@ -60,16 +61,20 @@ namespace SearchFlights
         Queries.getAirports()
       );
 
-      JObject airportDataObject = JObject.Parse(result.Result);
-    
       // Check airport codes
       if (airportDataObject.ContainsKey(dataInput)) 
       {
-        
+        return new Tuple<bool, string>(true, dataInput);
       }
-   
-
       return new Tuple<bool, string>(false, null);
+    }
+    public static void getAirPorts() {
+      // Do an API call to get a list of airport destinations. Parse the info and covert to a JS object.
+      Task<string> result = Task.Run(() =>
+        Queries.getAirports()
+      );
+
+      airportDataObject = JObject.Parse(result.Result);
     }
   }
 }

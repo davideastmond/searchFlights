@@ -11,13 +11,15 @@ namespace SearchFlights
   {
     static void Main(string[] args)
     {
-      /* Ask the user for the required information in order to process the query
+      /* Call API to get a list of airport codes.
+       * Ask the user for the required information in order to process the query
        * 1. Origin
          2. Destination
          3. Departure Date
          4. ADT (Number of adults)
       */
- 
+
+      Validations.getAirPorts();
       UserInput input = CollectUserInformation();
     }
 
