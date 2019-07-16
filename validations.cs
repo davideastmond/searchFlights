@@ -20,10 +20,19 @@ namespace SearchFlights
         return new Tuple<bool, DateTime>(false, DateTime.Now);
       }
 
+      
+
       DateTime value;
       if (DateTime.TryParse(dataInput, out value))
       {
-        return new Tuple<bool, DateTime>(true, value);
+        if (DateTime.Compare(value.Date, DateTime.Now.Date) >= 0)
+        {
+          return new Tuple<bool, DateTime>(true, value);
+        } else {
+          // Date entered seems to be in the past
+          Console.WriteLine("Date is in the past.");
+          return new Tuple<bool, DateTime>(false, DateTime.Now);
+        }
       }
       return new Tuple<bool, DateTime>(false, DateTime.Now);
     }

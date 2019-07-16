@@ -4,6 +4,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 
 namespace SearchFlights
 {
@@ -19,8 +20,15 @@ namespace SearchFlights
          4. ADT (Number of adults)
       */
 
-      Validations.getAirPorts();
-      UserInput input = CollectUserInformation();
+      Validations.getAirPorts(); // Get a list of current airports
+      UserInput input = CollectUserInformation(); 
+      Console.WriteLine($"Origin: {input.origin} \n Destination: {input.destination} \n Departure Date: {input.departureDate.ToString("yyyy-MM-dd")} \n Adult Count: {input.numberAdults}");
+      Task<string> airportQueryResults = Task.Run(()=> Queries.getFlights(input));
+      JObject resultsJSON = JObject.Parse(airportQueryResults.Result);
+      Queries.ProcessResults(resultsJSON, input);
+      /*var objCollection = resultsJSON;
+      Console.WriteLine(objCollection["trips"][0]["dates"][0]["dateOut"]);*/
+      
     }
 
     static UserInput CollectUserInformation() {
