@@ -9,19 +9,19 @@ namespace SearchFlights
 {
   public static class Validations
   {
+    /* The Validations Class sanitizes the user's input from the command line. 
+     I also store the airport parsed data here so I don't have to make more than one API calls to get the airports list.
+     The validate functions all return Tuple<bool, someValue> where someValue is sanitized info we'll put into the UserInput struct */
+
     public static JObject airportDataObject;
     /* These are our validation functions that will return false if the user input is invalid */
-    public static Tuple<bool, DateTime> validateUserDateInput(string dataInput)
+    public static Tuple<bool, DateTime> ValidateUserDateInput(string dataInput)
     {
-      // Validate the adult count
       dataInput = dataInput.Trim();
       if (dataInput == "")
       {
         return new Tuple<bool, DateTime>(false, DateTime.Now);
       }
-
-      
-
       DateTime value;
       if (DateTime.TryParse(dataInput, out value))
       {
@@ -37,7 +37,7 @@ namespace SearchFlights
       return new Tuple<bool, DateTime>(false, DateTime.Now);
     }
 
-    public static Tuple<bool, int> validateUserAdultCountInput(string dataInput)
+    public static Tuple<bool, int> ValidateUserAdultCountInput(string dataInput)
     {
       // Validate the adult count
       dataInput = dataInput.Trim();
@@ -50,25 +50,25 @@ namespace SearchFlights
 
       if (int.TryParse(dataInput, out value))
       {
-        return new Tuple<bool, int>(true, value);
+        if (value > 0)
+        {
+          return new Tuple<bool, int>(true, value);
+        } else {
+          Console.WriteLine("Number cannot be zero or negative");
+        }
       }
       return new Tuple<bool, int>(false, -1);
     }
 
-    public static Tuple<bool, string> validateOriginDestination(string dataInput)
+    public static Tuple<bool, string> ValidateOriginDestination(string dataInput)
     {
       // Make sure the user's input for origin or destination string isn't empty.
-      // API call to RyanAir to get a list of their destinations / origins to make sure that the user entered a valid dest/origin.
+      // An API call to RyanAir is done when the App starts. It's stored in the airportDataObject variable.
       dataInput = dataInput.Trim().ToUpper();
       if (dataInput == "")
       {
         return new Tuple<bool, string>(false, null);
       }
-
-      // Do an API call to get a list of airport destinations. Parse the info and covert to a JS object.
-      Task<string> result = Task.Run(() =>
-        Queries.getAirports()
-      );
 
       // Check airport codes
       if (airportDataObject.ContainsKey(dataInput)) 
@@ -77,10 +77,10 @@ namespace SearchFlights
       }
       return new Tuple<bool, string>(false, null);
     }
-    public static void getAirPorts() {
+    public static void GetAirPorts() {
       // Do an API call to get a list of airport destinations. Parse the info and covert to a JS object.
       Task<string> result = Task.Run(() =>
-        Queries.getAirports()
+        Queries.GetAirports()
       );
 
       airportDataObject = JObject.Parse(result.Result);
