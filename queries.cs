@@ -41,6 +41,7 @@ namespace SearchFlights
       }
     }
 
+
     public static void ProcessResults (JObject parsedResultsObj, UserInput input) {
       // This method processes the results from a flight search
 

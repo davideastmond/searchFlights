@@ -10,7 +10,7 @@ namespace SearchFlights
 {
   class Program
   {
-    static void Main(string[] args)
+    static void   Main(string[] args)
     {
       /* Call API to get a list of airport codes.
        * Ask the user for the required information in order to process the query
@@ -34,7 +34,13 @@ namespace SearchFlights
           JObject resultsJSON = JObject.Parse(airportQueryResults.Result);
           if (resultsJSON != null)
           {
-            Queries.ProcessResults(resultsJSON, input);
+
+            if (Validations.CheckParsingForTrips(resultsJSON))
+            {
+              Queries.ProcessResults(resultsJSON, input);
+            } else {
+              Console.WriteLine("Parsing error - unable to parse trips");
+            }
           } else {
             Console.WriteLine("Unable to obtain results");
           }

@@ -77,5 +77,15 @@ namespace SearchFlights
       }
       return new Tuple<bool, string>(false, null);
     }
+    public static bool CheckParsingForTrips(JObject parsedDataObject) {
+      // Returns true if the keys can be converted into a valid jObject. If the jObject is null, 
+      // return false.
+      var tripObject = parsedDataObject["trips"];
+
+      if (tripObject != null) {
+        return true;
+      }
+      return false;
+    }
   }
 }
