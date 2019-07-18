@@ -42,9 +42,10 @@ namespace SearchFlights
     }
 
 
-    public static void ProcessResults (JObject parsedResultsObj, UserInput input) {
+    public static Tuple<bool, List<Itinerary>> ProcessResults (JObject parsedResultsObj, UserInput input) {
       // This method processes the results from a flight search
 
+      Console.WriteLine(parsedResultsObj);
       // Grab the trips from the parsedResultsObj variable
       var trips = parsedResultsObj["trips"];
       foreach (var trip in trips) {
@@ -57,18 +58,13 @@ namespace SearchFlights
             /* We have to iterate through flights based on the inputted date that is matching. 
              * We'll get back a tuple<bool, List<Itinerary>> */
             Console.WriteLine($"Flight(s) for {flightDateOut.Date.ToString("yyyy-MM-dd")}");
-            Tuple<bool, List<Itinerary>> listOfFlights = MakeListFromFlightFareResults(tripDate, input.origin, input.destination, parsedResultsObj["currency"].ToString());
-            if (listOfFlights.Item1 == false)
-            {
-              Console.WriteLine("No flights found.");
-            }
-            else
-            {
-              PrintOutFlights(listOfFlights.Item2);
-            }
+            return MakeListFromFlightFareResults(tripDate, input.origin, input.destination, parsedResultsObj["currency"].ToString());
+            
           }
         }
       }
+      // Nothing is found, return false and a null list
+      return new Tuple<bool, List<Itinerary>>(false, null);
     }
 
     static DateTime GrabDate (string DateData) {
@@ -115,7 +111,7 @@ namespace SearchFlights
       return new Tuple<bool, List<Itinerary>>(false, null);
     }
 
-    static void PrintOutFlights(List<Itinerary> itin) {
+    public static void PrintOutFlights(List<Itinerary> itin) {
       // Sort the List first, then print it out
       itin.Sort();
       foreach(Itinerary i in itin) {

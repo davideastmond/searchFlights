@@ -37,7 +37,14 @@ namespace SearchFlights
 
             if (Validations.CheckParsingForTrips(resultsJSON))
             {
-              Queries.ProcessResults(resultsJSON, input);
+              Tuple<bool, List<Itinerary>> processedFlightResults = Queries.ProcessResults(resultsJSON, input);
+
+              if (processedFlightResults.Item1) {
+                // Print out the flights
+                Queries.PrintOutFlights(processedFlightResults.Item2);
+              } else {
+                Console.WriteLine("No flights found");
+              }
             } else {
               Console.WriteLine("Parsing error - unable to parse trips");
             }
