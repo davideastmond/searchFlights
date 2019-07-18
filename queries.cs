@@ -46,7 +46,6 @@ namespace SearchFlights
     public static Tuple<bool, List<Itinerary>> ProcessResults (JObject parsedResultsObj, UserInput input) {
       // This method processes the results from a flight search, parses the JSON etc
 
-      Console.WriteLine(parsedResultsObj);
       // Grab the trips from the parsedResultsObj variable
       var trips = parsedResultsObj["trips"];
       foreach (var trip in trips) {
@@ -77,6 +76,7 @@ namespace SearchFlights
 
     static Tuple<bool, List<Itinerary>> MakeListFromFlightFareResults (JToken tripDateFlights, string pOrigin, string pDestination, string pCurrency) {
       // This function creates a list object that is going to store all of our flight info
+      // making it easier to display it later
 
       var obj = (JArray)tripDateFlights["flights"];
       if (obj.Count <= 0) {
@@ -106,6 +106,10 @@ namespace SearchFlights
           }
         }
       }
+
+      /* At the end of the above loop, if the list count is zero, return false and null,
+       * otherwise return true, and the list object itself.
+      */
       if (listOfFlights.Count > 0) {
         return new Tuple<bool, List<Itinerary>>(true, listOfFlights);
       }
