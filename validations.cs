@@ -9,11 +9,9 @@ namespace SearchFlights
 {
   public static class Validations
   {
-    /* The Validations Class sanitizes the user's input from the command line. 
-     I also store the airport parsed data here so I don't have to make more than one API calls to get the airports list.
+    /* The Validations Class sanitizes the user's input from the command line.
      The validate functions all return Tuple<bool, someValue> where someValue is sanitized info we'll put into the UserInput struct */
-
-    
+         
     /* These are our validation functions that will return false if the user input is invalid */
     public static Tuple<bool, DateTime> ValidateUserDateInput(string dataInput)
     {

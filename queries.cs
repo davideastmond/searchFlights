@@ -7,13 +7,14 @@ using System.Collections;
 
 namespace SearchFlights
 {
-  /* This static class will handle all our API calls */
+  /* This static class will handle all our API calls and process data received */
   public static class Queries {
     const string URI_AIRPORTS = "https://desktopapps.ryanair.com/en-gb/res/stations";
     public static JObject airportDataObject;
 
     public static async Task<string> GetAirports(string uri_default = URI_AIRPORTS) {
-      // Call API endpoint to get gets us a JSON Object of all the airport destinations for RyanAir
+      // Call API endpoint to get gets us a JSON Object of all the airport destinations for RyanAir.
+      // We'll stash this info in a static object so it can be queried without making an API call
       using (HttpClient client = new HttpClient()){
         try {
           var returnValue = await client.GetStringAsync(uri_default);
@@ -43,7 +44,7 @@ namespace SearchFlights
 
 
     public static Tuple<bool, List<Itinerary>> ProcessResults (JObject parsedResultsObj, UserInput input) {
-      // This method processes the results from a flight search
+      // This method processes the results from a flight search, parses the JSON etc
 
       Console.WriteLine(parsedResultsObj);
       // Grab the trips from the parsedResultsObj variable
