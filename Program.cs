@@ -22,12 +22,28 @@ namespace SearchFlights
          Query the API and get some results. Parse it into a JObject and then process the object
       */
 
-      Validations.GetAirPorts();
-      UserInput input = CollectUserInformation(); 
-      Console.WriteLine($"Origin: {input.origin} \n Destination: {input.destination} \n Departure Date: {input.departureDate.ToString("yyyy-MM-dd")} \n Adult Count: {input.numberAdults}");
-      Task<string> airportQueryResults = Task.Run(()=> Queries.GetFlights(input));
-      JObject resultsJSON = JObject.Parse(airportQueryResults.Result);
-      Queries.ProcessResults(resultsJSON, input);
+      Task<string> airportResults = Task.Run(()=> Queries.GetAirports());
+
+      if (airportResults.Result != null)
+      {
+        UserInput input = CollectUserInformation();
+        Console.WriteLine($"Origin: {input.origin} \n Destination: {input.destination} \n Departure Date: {input.departureDate.ToString("yyyy-MM-dd")} \n Adult Count: {input.numberAdults}");
+        Task<string> airportQueryResults = Task.Run(() => Queries.GetFlights(input));
+        if (airportQueryResults.Result != null)
+        {
+          JObject resultsJSON = JObject.Parse(airportQueryResults.Result);
+          if (resultsJSON != null)
+          {
+            Queries.ProcessResults(resultsJSON, input);
+          } else {
+            Console.WriteLine("Unable to obtain results");
+          }
+        }
+        else
+        {
+          Console.WriteLine("Unable to obtain flight information because the result is empty.");
+        }
+      }
     }
 
     static UserInput CollectUserInformation() {

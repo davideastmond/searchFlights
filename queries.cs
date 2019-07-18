@@ -10,12 +10,15 @@ namespace SearchFlights
   /* This static class will handle all our API calls */
   public static class Queries {
     const string URI_AIRPORTS = "https://desktopapps.ryanair.com/en-gb/res/stations";
+    public static JObject airportDataObject;
 
-    public static async Task<string> GetAirports() {
+    public static async Task<string> GetAirports(string uri_default = URI_AIRPORTS) {
       // Call API endpoint to get gets us a JSON Object of all the airport destinations for RyanAir
       using (HttpClient client = new HttpClient()){
         try {
-          return await client.GetStringAsync(URI_AIRPORTS);
+          var returnValue = await client.GetStringAsync(uri_default);
+          airportDataObject = JObject.Parse(returnValue);
+          return returnValue;
         } catch (Exception ex) {
           Console.WriteLine(ex.Message);
           return null;

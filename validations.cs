@@ -13,7 +13,7 @@ namespace SearchFlights
      I also store the airport parsed data here so I don't have to make more than one API calls to get the airports list.
      The validate functions all return Tuple<bool, someValue> where someValue is sanitized info we'll put into the UserInput struct */
 
-    public static JObject airportDataObject;
+    
     /* These are our validation functions that will return false if the user input is invalid */
     public static Tuple<bool, DateTime> ValidateUserDateInput(string dataInput)
     {
@@ -50,11 +50,11 @@ namespace SearchFlights
 
       if (int.TryParse(dataInput, out value))
       {
-        if (value > 0)
+        if (value > 0 && value <= 25)
         {
           return new Tuple<bool, int>(true, value);
         } else {
-          Console.WriteLine("Number cannot be zero or negative");
+          Console.WriteLine("Number has to be valid. Greater than zero and less than 25");
         }
       }
       return new Tuple<bool, int>(false, -1);
@@ -71,19 +71,11 @@ namespace SearchFlights
       }
 
       // Check airport codes
-      if (airportDataObject.ContainsKey(dataInput)) 
+      if (Queries.airportDataObject.ContainsKey(dataInput)) 
       {
         return new Tuple<bool, string>(true, dataInput);
       }
       return new Tuple<bool, string>(false, null);
-    }
-    public static void GetAirPorts() {
-      // Do an API call to get a list of airport destinations. Parse the info and covert to a JS object.
-      Task<string> result = Task.Run(() =>
-        Queries.GetAirports()
-      );
-
-      airportDataObject = JObject.Parse(result.Result);
     }
   }
 }
