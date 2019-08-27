@@ -42,7 +42,6 @@ namespace SearchFlights
       }
     }
 
-
     public static Tuple<bool, List<Itinerary>> ProcessResults (JObject parsedResultsObj, UserInput input) {
       // This method processes the results from a flight search, parses the JSON etc
 

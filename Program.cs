@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using System.Runtime.InteropServices;
 using System.IO;
 using System.Collections.Generic;
 using System.Text;
@@ -10,7 +11,7 @@ namespace SearchFlights
 {
   class Program
   {
-    static void   Main(string[] args)
+    static void Main(string[] args)
     {
       /* Call API to get a list of airport codes.
        * Ask the user for the required information in order to process the query
@@ -68,14 +69,26 @@ namespace SearchFlights
       {
         Console.WriteLine("Enter Flight Origin:");
         string originInfo = Console.ReadLine();
-        Tuple<bool, string> resultInfo = Validations.ValidateOriginDestination(originInfo);
-        if (resultInfo.Item1) 
+
+        if (originInfo == "list")
         {
-          uInformation.origin = resultInfo.Item2;
-          break;
-        } else 
+          // If user types in a 'list'command, list all the airport codes
+          foreach(var kvP in Queries.airportDataObject) {
+            Console.WriteLine(kvP.Key + " : " + kvP.Value["name"]);
+            Console.WriteLine(kvP);
+          }
+        } else
         {
-          Console.WriteLine("Please enter a valid airport code.");
+          Tuple<bool, string> resultInfo = Validations.ValidateOriginDestination(originInfo);
+          if (resultInfo.Item1)
+          {
+            uInformation.origin = resultInfo.Item2;
+            break;
+          }
+          else
+          {
+            Console.WriteLine("Please enter a valid airport code.");
+          }
         }
       }
 
