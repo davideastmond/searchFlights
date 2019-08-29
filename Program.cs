@@ -24,7 +24,6 @@ namespace SearchFlights
       */
 
       Task<string> airportResults = Task.Run(()=> Queries.GetAirports());
-
       if (airportResults.Result != null)
       {
         UserInput input = CollectUserInformation();
@@ -73,10 +72,8 @@ namespace SearchFlights
         if (originInfo == "list")
         {
           // If user types in a 'list'command, list all the airport codes
-          foreach(var kvP in Queries.airportDataObject) {
-            Console.WriteLine(kvP.Key + " : " + kvP.Value["name"]);
-            Console.WriteLine(kvP);
-          }
+          var miniApp = new selectAirportsMiniApp(Queries.airportDataObject);
+          miniApp.Start();
         } else
         {
           Tuple<bool, string> resultInfo = Validations.ValidateOriginDestination(originInfo);
