@@ -27,7 +27,10 @@ namespace SearchFlights
 
     public void Start() 
     {
+    /* This starts the miniapp object, allowing user to scroll through the list of airports until the end */
       int count = 0;
+      Console.WriteLine("Airports and Codes");
+      Console.WriteLine("=================");
       foreach (Airport ap in listOfAirPorts)
       {
         count++;
