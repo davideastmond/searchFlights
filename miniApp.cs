@@ -27,28 +27,51 @@ namespace SearchFlights
 
     public void Start() 
     {
-    /* This starts the miniapp object, allowing user to scroll through the list of airports until the end */
-      int count = 0;
-      Console.WriteLine("Airports and Codes");
-      Console.WriteLine("=================");
-      foreach (Airport ap in listOfAirPorts)
+      int iValue = 0;
+      displayAirportPage(iValue);
+      while (true)
       {
-        count++;
-        if (count <= maxItems)
-        {
-          Console.WriteLine(ap.Code + " : " + ap.Name);
+        ConsoleKeyInfo keyInfo = Console.ReadKey();
+        
+        if (keyInfo.Key == ConsoleKey.DownArrow) {
+          if (displayAirportPage(iValue)) {
+            iValue++;
+          } else {
+            iValue = listOfAirPorts.Count - 1;
+          }
+        } else if (keyInfo.Key == ConsoleKey.UpArrow) {
+         
+          if (displayAirportPage(iValue))
+          {
+            iValue--;
+          } else {
+            iValue = 0;
+          }
+          
+        } else {
+          return;
         }
-        else
-        {
-          Console.WriteLine("Press a key to continue");
-          Console.ReadKey();
-          count = 0;
+        Console.WriteLine("Page " + iValue);
+      }
+    }
 
-          Console.Clear();
-          Console.WriteLine("Airports and Codes");
-          Console.WriteLine("=================");
+    private bool displayAirportPage(int index) {
+
+      Console.Clear();
+      int startPos = index * maxItems;
+      int endPos = index * maxItems + maxItems;
+      
+      for (int i = startPos; i <= endPos; i++) {
+        if (i < listOfAirPorts.Count && i >= 0)
+        {
+          Console.WriteLine(listOfAirPorts[i].Code + " " + listOfAirPorts[i].Name);
+
+        } else {
+          return false;
         }
       }
+     
+      return true;
     }
   }
 
