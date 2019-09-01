@@ -37,6 +37,7 @@ namespace SearchFlights
           iValue++;
           if (displayAirportPage(iValue)) {
             
+            Console.WriteLine("Page " + iValue);
           } else {
             iValue--;
           }
@@ -44,25 +45,28 @@ namespace SearchFlights
           iValue--;
           if (displayAirportPage(iValue))
           {
-           
+            Console.WriteLine("Page " + iValue);
           } else {
             iValue++;
           }
           
         } else {
-          Console.Clear();
+          Console.WriteLine("Page " + iValue);
           return;
         }
-        Console.WriteLine("Page " + iValue);
+ 
       }
     }
 
     private bool displayAirportPage(int index) {
 
-      Console.Clear();
+      
       int startPos = index * maxItems;
       int endPos = index * maxItems + maxItems;
       
+      if (index >= 0 && index < listOfAirPorts.Count) {
+        Console.Clear();
+      }
       for (int i = startPos; i <= endPos; i++) {
         if (i < listOfAirPorts.Count && i >= 0)
         {
