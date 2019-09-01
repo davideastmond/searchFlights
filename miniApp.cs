@@ -34,21 +34,23 @@ namespace SearchFlights
         ConsoleKeyInfo keyInfo = Console.ReadKey();
         
         if (keyInfo.Key == ConsoleKey.DownArrow) {
+          iValue++;
           if (displayAirportPage(iValue)) {
-            iValue++;
+            
           } else {
-            iValue = listOfAirPorts.Count - 1;
+            iValue--;
           }
         } else if (keyInfo.Key == ConsoleKey.UpArrow) {
-         
+          iValue--;
           if (displayAirportPage(iValue))
           {
-            iValue--;
+           
           } else {
-            iValue = 0;
+            iValue++;
           }
           
         } else {
+          Console.Clear();
           return;
         }
         Console.WriteLine("Page " + iValue);
